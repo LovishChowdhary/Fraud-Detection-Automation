@@ -1,0 +1,936 @@
+{
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7be4fd35-1513-476b-8c38-5aa6b7a12ee8",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY",
+          "mode": "list",
+          "cachedResultName": "Untitled spreadsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 978398113,
+          "mode": "list",
+          "cachedResultName": "Invoice Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY/edit#gid=978398113"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        208,
+        0
+      ],
+      "id": "19865dcb-d9df-4710-982a-ed06f23acb78",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "swLrqOT3YrWa49Zl",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "b49e95af-7120-497b-a2bb-47664f95679a",
+              "leftValue": "={{ $json['Amount (₹)'] }}",
+              "rightValue": 70000,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "de6edffa-bb3c-4da7-ba85-3f5ceb8487f6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "lovishchowdhary25@gmail.com",
+        "subject": "🚨 High Fraud Risk",
+        "message": "=```html id=\"step2mail\" <body style=\"font-family:Arial;background:#f4f4f4;padding:20px;\">  <table width=\"850\" align=\"center\" style=\"background:white;border-collapse:collapse;\">  <tr> <td style=\"background:#1565c0;color:white;padding:25px;text-align:center;\">  <h1>⚠ Financial Risk Alert</h1>  <p>High Value Transaction Detected</p>  </td> </tr>  <tr> <td style=\"padding:30px;\">  <h2>Financial Risk Summary</h2>  <p> AI monitoring detected a high-value transaction requiring CFO approval. </p>  <table width=\"100%\" border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse:collapse;\">  <tr style=\"background:#1565c0;color:white;\">  <th>Invoice ID</th> <th>Vendor</th> <th>Department</th> <th>Amount</th>  </tr>  <tr>  <td>{{$json[\"Invoice_ID\"]}}</td> <td>{{$json[\"Vendor_Name\"]}}</td> <td>{{$json[\"Department\"]}}</td> <td>₹ {{$json[\"Amount\"]}}</td>  </tr>  </table>  <div style=\"margin-top:25px;background:#eef5ff;padding:20px;\">  <b>AI Insight:</b><br><br>  Transaction crossed enterprise risk threshold.  </div>  </td> </tr>  </table>  </body> ```",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        -96
+      ],
+      "id": "7e87834b-b59a-4753-88fc-2805f0ac6470",
+      "name": "Send a message",
+      "webhookId": "62d88473-ff30-40c3-9bc0-d58012028195",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nwVxE1aIRSt4QABI",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "fbb7abeb-b676-4e01-8725-01c3b798eb35",
+              "leftValue": "={{ $json['Revenue (₹)'] }}",
+              "rightValue": 2500000,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        624,
+        160
+      ],
+      "id": "7dcfd045-a0b1-4937-8c7a-ff1601f0983e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "sendTo": "lovishchowdhary25@gmail.com",
+        "subject": "📊 Medium Risk Financial Review",
+        "message": "=```html id=\"step4mail\" <body style=\"font-family:Arial;background:#f4f4f4;padding:20px;\">  <table width=\"850\" align=\"center\" style=\"background:white;border-collapse:collapse;\">  <tr> <td style=\"background:#f9a825;color:white;padding:25px;text-align:center;\">  <h1>📊 Medium Risk Review</h1>  <p>Finance Manager Verification Required</p>  </td> </tr>  <tr> <td style=\"padding:30px;\">  <table width=\"100%\" border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse:collapse;\">  <tr style=\"background:#f9a825;color:white;\">  <th>Invoice ID</th> <th>Department</th> <th>Amount</th> <th>Risk Status</th>  </tr>  <tr>  <td>{{$json[\"Invoice_ID\"]}}</td> <td>{{$json[\"Department\"]}}</td> <td>₹ {{$json[\"Amount\"]}}</td> <td>{{$json[\"Risk_Status\"]}}</td>  </tr>  </table>  <div style=\"margin-top:25px;background:#fff8e1;padding:20px;\">  <b>AI Review Insight:</b><br><br>  Medium-risk transaction requires finance review.  </div>  </td> </tr>  </table>  </body> ```",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        32
+      ],
+      "id": "c42eeba8-f1f3-41ae-9419-b2929846c83b",
+      "name": "Send a message1",
+      "webhookId": "cb7f3b76-1254-405a-b85b-e7b0e4da52a5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nwVxE1aIRSt4QABI",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "lovishchowdhary25@gmail.com",
+        "subject": "✅ Invoice Approved Successfully",
+        "message": "=```html id=\"step5mail\" <body style=\"font-family:Arial;background:#f4f4f4;padding:20px;\">  <table width=\"850\" align=\"center\" style=\"background:white;border-collapse:collapse;\">  <tr> <td style=\"background:#2e7d32;color:white;padding:25px;text-align:center;\">  <h1>✅ Invoice Approved</h1>  <p>Low Risk Auto Approval Completed</p>  </td> </tr>  <tr> <td style=\"padding:30px;\">  <table width=\"100%\" border=\"1\" cellpadding=\"10\" cellspacing=\"0\" style=\"border-collapse:collapse;\">  <tr style=\"background:#2e7d32;color:white;\">  <th>Invoice ID</th> <th>Department</th> <th>Amount</th> <th>Status</th>  </tr>  <tr>  <td>{{$json[\"Invoice_ID\"]}}</td> <td>{{$json[\"Department\"]}}</td> <td>₹ {{$json[\"Amount\"]}}</td> <td>Approved</td>  </tr>  </table>  <div style=\"margin-top:25px;background:#edf7ed;padding:20px;\">  <b>Approval Insight:</b><br><br>  Low-risk invoice approved automatically.  </div>  </td> </tr>  </table>  </body> ```",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        896,
+        192
+      ],
+      "id": "6b068cbd-4c9f-4641-8456-8fa9daaa9268",
+      "name": "Send a message2",
+      "webhookId": "13ecb2ee-8fc3-418a-bccf-db7d39aecf0b",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "nwVxE1aIRSt4QABI",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY",
+          "mode": "list",
+          "cachedResultName": "Untitled spreadsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 978398113,
+          "mode": "list",
+          "cachedResultName": "Invoice Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY/edit#gid=978398113"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice ID": "={{ $('Get row(s) in sheet').item.json['Invoice ID'] }}",
+            "Status": "High Risk Status",
+            "Risk_Category": "Suspicious",
+            "Email_Sent": "YES",
+            "Processed _time": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "Invoice ID"
+          ],
+          "schema": [
+            {
+              "id": "Invoice ID",
+              "displayName": "Invoice ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vendor Name",
+              "displayName": "Vendor Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Amount (₹)",
+              "displayName": "Amount (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GST Number",
+              "displayName": "GST Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Payment Mode",
+              "displayName": "Payment Mode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Risk Flag",
+              "displayName": "Risk Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Duplicate Check",
+              "displayName": "Duplicate Check",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Approval Level",
+              "displayName": "Approval Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company ID",
+              "displayName": "Company ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Revenue (₹)",
+              "displayName": "Revenue (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA (₹)",
+              "displayName": "EBITDA (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net Profit (₹)",
+              "displayName": "Net Profit (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Assets (₹)",
+              "displayName": "Assets (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Liabilities (₹)",
+              "displayName": "Liabilities (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Invoice Amt (₹)",
+              "displayName": "Invoice Amt (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Debt/Equity Ratio",
+              "displayName": "Debt/Equity Ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA Margin %",
+              "displayName": "EBITDA Margin %",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net Margin %",
+              "displayName": "Net Margin %",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk Status",
+              "displayName": "Risk Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Category",
+              "displayName": "Risk_Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email_Sent",
+              "displayName": "Email_Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Alert_type",
+              "displayName": "Alert_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Processed _time",
+              "displayName": "Processed _time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        800,
+        -144
+      ],
+      "id": "b496a68d-1bd4-4c6e-8d19-61ca837d9dfe",
+      "name": "Update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "swLrqOT3YrWa49Zl",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY",
+          "mode": "list",
+          "cachedResultName": "Untitled spreadsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 978398113,
+          "mode": "list",
+          "cachedResultName": "Invoice Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GPljmkuA5U_dgHmtM8sRJso4fYUH7960P1II8zoJFEY/edit#gid=978398113"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Invoice ID": "={{ $('Get row(s) in sheet').item.json['Invoice ID'] }}",
+            "Status": "Review Required",
+            "Risk Flag": "FRAUD",
+            "Duplicate Check": "Duplicate",
+            "Processed _time": "={{ $now }}"
+          },
+          "matchingColumns": [
+            "Invoice ID"
+          ],
+          "schema": [
+            {
+              "id": "Invoice ID",
+              "displayName": "Invoice ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Vendor Name",
+              "displayName": "Vendor Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Amount (₹)",
+              "displayName": "Amount (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Due Date",
+              "displayName": "Due Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Department",
+              "displayName": "Department",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "GST Number",
+              "displayName": "GST Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Payment Mode",
+              "displayName": "Payment Mode",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Status",
+              "displayName": "Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Risk Flag",
+              "displayName": "Risk Flag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Duplicate Check",
+              "displayName": "Duplicate Check",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Approval Level",
+              "displayName": "Approval Level",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Company ID",
+              "displayName": "Company ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Revenue (₹)",
+              "displayName": "Revenue (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA (₹)",
+              "displayName": "EBITDA (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net Profit (₹)",
+              "displayName": "Net Profit (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Assets (₹)",
+              "displayName": "Assets (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Liabilities (₹)",
+              "displayName": "Liabilities (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Invoice Amt (₹)",
+              "displayName": "Invoice Amt (₹)",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Debt/Equity Ratio",
+              "displayName": "Debt/Equity Ratio",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "EBITDA Margin %",
+              "displayName": "EBITDA Margin %",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Net Margin %",
+              "displayName": "Net Margin %",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk Status",
+              "displayName": "Risk Status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Risk_Category",
+              "displayName": "Risk_Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Decision",
+              "displayName": "Decision",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Email_Sent",
+              "displayName": "Email_Sent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Alert_type",
+              "displayName": "Alert_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Processed _time",
+              "displayName": "Processed _time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        976,
+        32
+      ],
+      "id": "a0429548-43c7-4bda-804e-faa880239157",
+      "name": "Update row in sheet1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "swLrqOT3YrWa49Zl",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Update row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "01baf67b-0e8e-4395-855a-709e94d85dbe",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d913d9de09d818e7bb6d3be156b026d96d0fa7275654260a4ec9257418e0298c"
+  },
+  "id": "6wpumZjkcfosjKiC",
+  "tags": []
+}
